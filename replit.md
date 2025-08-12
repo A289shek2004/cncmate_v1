@@ -12,10 +12,11 @@ Preferred communication style: Simple, everyday language.
 - **Framework**: React 18 with TypeScript using Vite as the build tool
 - **Styling**: Tailwind CSS with shadcn/ui component library for consistent design
 - **State Management**: TanStack React Query for server state and caching
-- **Routing**: Wouter for lightweight client-side routing
+- **Routing**: Wouter for lightweight client-side routing with 6-module navigation structure
+- **Navigation**: Professional sidebar navigation organizing platform into distinct modules
 - **Real-time Updates**: WebSocket integration for live machine status and alerts
 - **UI Components**: Radix UI primitives wrapped in custom components following the "new-york" style theme
-- **Mobile-First**: Responsive design with dedicated mobile navigation components
+- **Module Organization**: Six core modules - Real-time Monitoring, Predictive Maintenance, Operator & Jobs, Quality & Defects, Performance Dashboards, Production Insights
 
 ## Backend Architecture
 - **Framework**: Express.js server with TypeScript
