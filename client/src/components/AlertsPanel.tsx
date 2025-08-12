@@ -144,7 +144,7 @@ export function AlertsPanel({ alerts }: AlertsPanelProps) {
                   className={`text-xs mt-1 ${getAlertTextColor(alert.type, alert.severity).replace('800', '600')}`}
                   data-testid={`text-alert-timestamp-${alert.id}`}
                 >
-                  {formatTimestamp(alert.createdAt)}
+                  {formatTimestamp(alert.createdAt || new Date().toISOString())}
                 </p>
               </div>
               <Button

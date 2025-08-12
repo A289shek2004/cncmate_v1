@@ -24,13 +24,13 @@ export function NavigationHeader({
     return null;
   }
 
-  const getInitials = (firstName?: string, lastName?: string) => {
+  const getInitials = (firstName?: string | null, lastName?: string | null) => {
     const first = firstName?.charAt(0) || '';
     const last = lastName?.charAt(0) || '';
     return (first + last).toUpperCase() || 'U';
   };
 
-  const getDisplayName = (firstName?: string, lastName?: string) => {
+  const getDisplayName = (firstName?: string | null, lastName?: string | null) => {
     if (firstName && lastName) {
       return `${firstName} ${lastName}`;
     }

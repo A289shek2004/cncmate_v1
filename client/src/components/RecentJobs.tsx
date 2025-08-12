@@ -137,13 +137,13 @@ export function RecentJobs({ jobs, onViewAll }: RecentJobsProps) {
                         className="text-sm font-medium text-neutral-900"
                         data-testid={`text-job-completed-time-${job.id}`}
                       >
-                        {formatTime(job.completedAt)}
+                        {formatTime(job.completedAt || new Date().toISOString())}
                       </p>
                       <p 
                         className="text-xs text-neutral-500"
                         data-testid={`text-job-completed-date-${job.id}`}
                       >
-                        {formatDate(job.completedAt)}
+                        {formatDate(job.completedAt || new Date().toISOString())}
                       </p>
                     </>
                   ) : job.startedAt ? (
@@ -152,7 +152,7 @@ export function RecentJobs({ jobs, onViewAll }: RecentJobsProps) {
                         className="text-sm font-medium text-neutral-900"
                         data-testid={`text-job-started-time-${job.id}`}
                       >
-                        {formatTime(job.startedAt)}
+                        {formatTime(job.startedAt || new Date().toISOString())}
                       </p>
                       <p className="text-xs text-neutral-500">Started</p>
                     </>
@@ -163,7 +163,7 @@ export function RecentJobs({ jobs, onViewAll }: RecentJobsProps) {
                         className="text-xs text-neutral-500"
                         data-testid={`text-job-created-date-${job.id}`}
                       >
-                        {formatDate(job.createdAt)}
+                        {formatDate(job.createdAt || new Date().toISOString())}
                       </p>
                     </>
                   )}

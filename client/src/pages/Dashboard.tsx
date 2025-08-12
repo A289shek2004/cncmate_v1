@@ -13,7 +13,7 @@ import { MobileNavigation } from "@/components/MobileNavigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Plus, Download, TrendingUp, TrendingDown } from "lucide-react";
+import { Plus, Download, TrendingUp, TrendingDown, Cog, Briefcase, Award } from "lucide-react";
 import { Machine, Job, Alert, Defect } from "@shared/schema";
 
 interface DashboardStats {

@@ -120,28 +120,28 @@ export function QualityLog({ defects, onLogNewDefect }: QualityLogProps) {
             {defects.map((defect) => (
               <div
                 key={defect.id}
-                className={`flex items-start space-x-3 p-4 border rounded-lg ${getDefectStyle(defect.severity, defect.resolved)}`}
+                className={`flex items-start space-x-3 p-4 border rounded-lg ${getDefectStyle(defect.severity, defect.resolved || false)}`}
                 data-testid={`defect-${defect.id}`}
               >
-                {getDefectIcon(defect.severity, defect.resolved)}
+                {getDefectIcon(defect.severity, defect.resolved || false)}
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-1">
                     <span 
-                      className={`font-medium ${getDefectTextColor(defect.severity, defect.resolved)}`}
+                      className={`font-medium ${getDefectTextColor(defect.severity, defect.resolved || false)}`}
                       data-testid={`text-defect-type-${defect.id}`}
                     >
                       {defect.type}
                     </span>
-                    {getSeverityBadge(defect.severity, defect.resolved)}
+                    {getSeverityBadge(defect.severity, defect.resolved || false)}
                   </div>
                   <p 
-                    className={`text-sm ${getDefectTextColor(defect.severity, defect.resolved).replace('800', '700')}`}
+                    className={`text-sm ${getDefectTextColor(defect.severity, defect.resolved || false).replace('800', '700')}`}
                     data-testid={`text-defect-description-${defect.id}`}
                   >
                     {defect.description}
                   </p>
                   <div 
-                    className={`flex items-center space-x-4 mt-2 text-xs ${getDefectTextColor(defect.severity, defect.resolved).replace('800', '600')}`}
+                    className={`flex items-center space-x-4 mt-2 text-xs ${getDefectTextColor(defect.severity, defect.resolved || false).replace('800', '600')}`}
                   >
                     {defect.jobId && (
                       <span data-testid={`text-defect-job-${defect.id}`}>
@@ -152,7 +152,7 @@ export function QualityLog({ defects, onLogNewDefect }: QualityLogProps) {
                       Machine: {defect.machineId}
                     </span>
                     <span data-testid={`text-defect-timestamp-${defect.id}`}>
-                      {formatTimestamp(defect.createdAt)}
+                      {formatTimestamp(defect.createdAt || new Date().toISOString())}
                     </span>
                   </div>
                 </div>
