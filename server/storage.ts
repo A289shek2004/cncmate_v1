@@ -29,6 +29,7 @@ export interface IStorage {
   getAllMachines(): Promise<Machine[]>;
   getMachine(id: string): Promise<Machine | undefined>;
   createMachine(machine: InsertMachine): Promise<Machine>;
+  updateMachine(id: string, updates: Partial<InsertMachine>): Promise<Machine | undefined>;
   updateMachineStatus(id: string, status: string, temperature?: number): Promise<void>;
   
   // Job operations
@@ -46,6 +47,7 @@ export interface IStorage {
   resolveDefect(id: string): Promise<void>;
   
   // Alert operations
+  getAllAlerts(): Promise<Alert[]>;
   getActiveAlerts(): Promise<Alert[]>;
   createAlert(alert: InsertAlert): Promise<Alert>;
   dismissAlert(id: string): Promise<void>;
@@ -95,6 +97,15 @@ export class DatabaseStorage implements IStorage {
   async createMachine(machine: InsertMachine): Promise<Machine> {
     const [newMachine] = await db.insert(machines).values(machine).returning();
     return newMachine;
+  }
+
+  async updateMachine(id: string, updates: Partial<InsertMachine>): Promise<Machine | undefined> {
+    const [machine] = await db
+      .update(machines)
+      .set({ ...updates, updatedAt: new Date(), lastDataUpdate: new Date() })
+      .where(eq(machines.id, id))
+      .returning();
+    return machine;
   }
 
   async updateMachineStatus(id: string, status: string, temperature?: number): Promise<void> {
@@ -172,6 +183,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Alert operations
+  async getAllAlerts(): Promise<Alert[]> {
+    return await db.select().from(alerts).orderBy(desc(alerts.createdAt));
+  }
+
   async getActiveAlerts(): Promise<Alert[]> {
     return await db.select().from(alerts)
       .where(eq(alerts.dismissed, false))

@@ -52,8 +52,13 @@ export const machines = pgTable("machines", {
   currentOperatorId: varchar("current_operator_id"),
   currentJobId: varchar("current_job_id"),
   temperature: integer("temperature").default(0),
+  vibration: decimal("vibration", { precision: 5, scale: 2 }).default('0'),
+  usage: decimal("usage", { precision: 5, scale: 2 }).default('0'),
+  rpm: integer("rpm").default(0),
+  power: decimal("power", { precision: 6, scale: 2 }).default('0'),
   lastMaintenanceDate: timestamp("last_maintenance_date"),
   totalRunningHours: integer("total_running_hours").default(0),
+  lastDataUpdate: timestamp("last_data_update").defaultNow(),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });

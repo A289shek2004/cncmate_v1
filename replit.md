@@ -1,6 +1,6 @@
 # Overview
 
-CNCMate is a smart CNC analytics platform designed for Indian MSMEs (Micro, Small, and Medium Enterprises). The application provides real-time machine monitoring, predictive maintenance alerts, and intelligent production insights to reduce downtime and improve operational efficiency for CNC operations. It features a comprehensive dashboard system with role-based access, quality tracking, job management, and real-time alerts.
+CNCMate is a smart CNC analytics platform designed for Indian MSMEs (Micro, Small, and Medium Enterprises). The application provides real-time machine monitoring with MQTT/OPC-UA integration, predictive maintenance alerts, and intelligent production insights to reduce downtime and improve operational efficiency for CNC operations. It features live data updates every minute, comprehensive dashboard system with role-based access, quality tracking, job management, and real-time alerts with WebSocket connectivity.
 
 # User Preferences
 
@@ -21,6 +21,8 @@ Preferred communication style: Simple, everyday language.
 - **Framework**: Express.js server with TypeScript
 - **API Design**: RESTful endpoints with comprehensive error handling middleware
 - **Real-time Communication**: WebSocket server for live updates and notifications
+- **MQTT Integration**: MQTT client for real-time machine data ingestion with automatic 1-minute update intervals  
+- **Machine Monitoring**: Live tracking of temperature, vibration, usage, RPM, and power consumption
 - **File Structure**: Clean separation between client, server, and shared code
 - **Development Setup**: Hot reload with Vite integration in development mode
 - **Build Process**: ESBuild for server bundling and Vite for client assets

@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { mqttClient } from "./mqttClient";
 import { insertJobSchema, insertDefectSchema, insertAlertSchema, insertMachineSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
 
@@ -175,6 +176,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Machine control endpoints
+  app.patch('/api/machines/:id/command', isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { command, value } = req.body;
+      
+      // Send command via MQTT
+      mqttClient.publishMachineCommand(id, command, value);
+      
+      res.json({ message: `Command ${command} sent to machine ${id}` });
+    } catch (error) {
+      console.error("Error sending machine command:", error);
+      res.status(500).json({ message: "Failed to send machine command" });
+    }
+  });
+
   app.patch('/api/alerts/:id/dismiss', isAuthenticated, async (req, res) => {
     try {
       const { id } = req.params;
@@ -193,6 +210,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   wss.on('connection', (ws) => {
     console.log('WebSocket client connected');
+
+    // Register WebSocket client with MQTT client for real-time updates
+    mqttClient.addWebSocketClient(ws);
 
     // Send initial data
     ws.send(JSON.stringify({ type: 'connection', message: 'Connected to CNCMate' }));
@@ -215,25 +235,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   };
 
-  // Simulate real-time machine updates (in production, this would come from actual machine data)
-  setInterval(async () => {
-    try {
-      const machines = await storage.getAllMachines();
-      const stats = await storage.getDashboardStats();
-      
-      broadcast({
-        type: 'machines_update',
-        data: machines,
-      });
-      
-      broadcast({
-        type: 'stats_update',
-        data: stats,
-      });
-    } catch (error) {
-      console.error('Error broadcasting updates:', error);
-    }
-  }, 5000);
+  // Remove the old simulation interval as MQTT client now handles this
+  // The MQTT client will broadcast updates every minute
 
   return httpServer;
 }

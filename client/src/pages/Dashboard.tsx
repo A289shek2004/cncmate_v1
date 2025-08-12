@@ -8,6 +8,7 @@ import { MachineStatusCard } from "@/components/MachineStatusCard";
 import { AlertsPanel } from "@/components/AlertsPanel";
 import { RecentJobs } from "@/components/RecentJobs";
 import { QualityLog } from "@/components/QualityLog";
+import { LiveMonitoring } from "@/components/LiveMonitoring";
 import { DefectModal } from "@/components/DefectModal";
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { Card, CardContent } from "@/components/ui/card";
@@ -182,6 +183,11 @@ export default function Dashboard() {
               </Button>
             </div>
           </div>
+        </div>
+
+        {/* Live CNC Monitoring */}
+        <div className="mb-8">
+          <LiveMonitoring />
         </div>
 
         {/* Key Metrics Overview */}
